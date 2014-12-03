@@ -1,9 +1,11 @@
+% !TeX spellcheck = en_US
+
 \section{SonarQube}
 \subsection{What does SonarQube provide?}
 SonarQube offers product metrics for various languages: ABAP, Android, C/C++,
 C-Sharp (C\#), COBOL, Flex, Groovy, Java, JavaScript, Objective-C, PHP, PL/I,
 PL/SQL, Python, RPG, VB.NET, Visual Basic 6, Web (HTML, JSP/JSF), and XML. In
-addition to build-in functionalities, plugins allow for multi-language analysis
+addition to build-in functionalities, plug-ins allow for multi-language analysis
 of code
 quality\footnote{\url{http://www.sonarqube.org/at-long-last-sonarqube-is-a-true-polyglot/}}.
 It is even possible to compare metrics between different languages and projects,
@@ -25,12 +27,32 @@ as Sonar)\footnote{\url{http://docs.codehaus.org/display/SONAR/Metric+definition
 		\item Lack of cohesion of methods (lcom4), i.e. set of related 
 		components of a class. There should be only one, otherwise the class should be divided into smaller classes.
 	\end{itemize}
-	\item Duplications of source code blocks and lines.
+	\item \textbf{Duplications of source code} blocks and lines.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.5]{img/code_duplications.jpg}
+		\caption{Code duplications per line, block, and file.} 
+		\label{fig:code_duplications}
+	\end{figure}
+	
 	\item Metrics about issues: open, confirmed, closed, false positive.
 	\item Metrics about defined rule compliance, i.e. violation density. \\
 	Violations is the number of rule breaches automatically calculated by
 	analyzing the source code of a project. Different projects can be compared to each other. In addition, developers can weight violations to find out where they must start fixing problems first.
+	\begin{align}
+		\begin{split}
+			\label{eq:rules_compliance_index}
+			rules\_compliance\_index =&\\
+			RCI =& 100 - \frac{weighted\_issues}{LLOC} \cdot 100
+		\end{split}
+	\end{align}
 	\item Technical debt is the effort to fix all issues in minutes.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.4]{img/technical_debt.jpg}
+		\caption{Technical debt and complexity metrics over time} 
+		\label{fig:technical_debt}
+	\end{figure}
 	\item Severity of issues is calculated automatically through defined rules,
 	several rule packages already exist for different languages, and are bundled
 	together with the default installation.
@@ -39,7 +61,19 @@ as Sonar)\footnote{\url{http://docs.codehaus.org/display/SONAR/Metric+definition
 	\item Test metrics: condition coverage for branching code, and separately 
 	for new code, and line coverage. Further more it exists a unit test 
 	integration with duration, errors, failures, and success density.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.5]{img/unit_test_coverage.jpg}
+		\caption{Unit test coverage, success rates and execution time} 
+		\label{fig:unit_test_coverage}
+	\end{figure}
 	\item Documentation metrics: lines of comments, significant lines of comments, commented out production code, and Javadoc support.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.5]{img/documentation.jpg}
+		\caption{Metrics about documentation.} 
+		\label{fig:documentation}
+	\end{figure}
 	\item Source code repository metrics about commits, revisions, and authors'
 	performance.
 \end{itemize}
@@ -51,38 +85,51 @@ The overall measures of these metrics are used to calculate the technical debt
 in man days:
 
 \begin{align}
-\begin{split}
-\label{Technical debt in man days}
-technical\_debt = & cost\_to\_fix\_duplications + \\
-  	& cost\_to\_fix\_violations + \\
-  	& cost\_to\_comment\_public\_API + \\
-  	& cost\_to\_fix\_uncovered\_complexity + 	\\
-  	& cost\_to\_bring\_complexity\_below\_threshold +\\
-  	& cost\_to\_cut\_cycles\_at\_package\_level
-\end{split}
+	\begin{split}
+		\label{eq:technical_debt_in_man_days}
+		technical\_debt = & cost\_to\_fix\_duplications + \\
+		 	& cost\_to\_fix\_violations + \\
+		 	& cost\_to\_comment\_public\_API + \\
+		 	& cost\_to\_fix\_uncovered\_complexity + 	\\
+		 	& cost\_to\_bring\_complexity\_below\_threshold +\\
+		 	& cost\_to\_cut\_cycles\_at\_package\_level
+	\end{split}
 \end{align}
 
 This technique is known as SQALE Rating\footnote{\url{http://docs.codehaus.org/display/SONAR/Technical+Debt#TechnicalDebt-ComparingprojectswiththeTechnicalDebtRatioandtheSQALERating}}. Technical debt ratio, that is shown in
-figure 2 and figure 5, is calculated with the following formula:
+figure~\ref{fig:technical_debt}, is calculated with the following formula:
 
 \begin{equation}
-\label{Technical Debt Ratio}
-technical\_debt\_ratio = technical\_debt / estimated\_development\_cost
+	\label{eq:technical_debt_ratio}
+	technical\_debt\_ratio = technical\_debt / estimated\_development\_cost
 \end{equation}
 
-
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{img/sqale_rating.jpg}
+	\caption{LOC compared to SQALE Ratings.} 
+	\label{fig:sqale_rating}
+\end{figure}
+	
 In addition to these metrics, SonarQube provides Eclipse and IntelliJ plug-ins to
 handle issues directly from within the IDEs. It also harvests some state of the
 art issue tracker currently available on the market, i.e. JIRA issues, Trac,
 Mantis Bug Tracker\footnote{MantisBT is an open source issue tracker:
-http://www.mantisbt.org/}. There exist also plugins to seamlessly include other
+\url{http://www.mantisbt.org/}}. There exist also plugins to seamlessly include other
 test and metric environments, like the Apache JMeter
-plugin\cite{http://docs.codehaus.org/display/SONAR/JMeter+Plugin} to test
+plugin\footnote{\url{http://docs.codehaus.org/display/SONAR/JMeter+Plugin}} to test
 performance of
 static and dynamic resources, or Pitest\footnote{PIT is a mutation testing tool for
-java: http://pitest.org/} to handle mutation testing.
+java: \url{http://pitest.org/}} to handle mutation testing.
 
 \subsection{What can PROM get from SonarQube or add to it?}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{img/lloc.jpg}
+	\caption{LOC metric in SonarQube for various languages.} 
+	\label{fig:lloc}
+\end{figure}
 
 As what I have seen so far, SonarQube is mainly focused on product metrics and
 issue tracking environments, i.e. bug reports and task lists. However, I think
@@ -90,7 +137,7 @@ it has no effort collection system, since these information is always given
 manually by developers. They insert estimates and progressions by hand into
 software development management tools, that are harvested later by the SonarQube
 analyzing tools, like SonarQube Runner, SonarQube Ant Task, Maven or Gradle
-Engines\footnote{How Sonar analyzes source code: http://docs.codehaus.org/display/SONAR/Analyzing+Source+Code}.
+Engines\footnote{How Sonar analyzes source code: \url{http://docs.codehaus.org/display/SONAR/Analyzing+Source+Code}}.
 
 I put the focus to the SonarQube Runner tool for the moment, since it is the
 recommended analyzer.  This tool analyzes a project and puts all calculated
@@ -118,7 +165,7 @@ Inheritance Tree), LCOM (lack of cohesion of methods), NOC (number of children),
 RFC (response set of a class), and WMC (weighted methods for class), and more
 direct metrics like LOC, and LLOC. However, these metrics work only (as I know)
 for Java and C++. SonarQube provides most of these metrics for a broad variety
-of languages, as you can see in figure 6.
+of languages, as you can see in figure~\ref{fig:lloc}.
 
 \subsection{Suggestions for plug-ins}
 
