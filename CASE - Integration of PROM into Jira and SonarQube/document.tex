@@ -27,18 +27,24 @@
 \numberwithin{figure}{section}			% Figurenumbering: section.fig#
 \numberwithin{table}{section}			% Tablenumbering: section.tab#
 
-\newcommand{\HRule}[1]{
-	\rule{
-		\linewidth
-	}{#1}
-}
+% Horizontal rule
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+% New command: footnote reference, to point to an existing footnote
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
 
 \begin{document}
 
 	\input{title.tex}
+	
+	\tableofcontents
+	
 	\input{chapter_sonarqube.tex}
 	\input{chapter_jira_agile.tex}
 	
+	\listoffigures
 	\bibliography{citations}
 
 \end{document}
