@@ -1,12 +1,9 @@
 % !TeX spellcheck = en_US
-% LaTeX Example: Project Report from http://www.howtotex.com
+% This template is a derived work from "LaTeX Example: Project Report: http://www.howtotex.com"
 
-%%% Preamble
 \documentclass[paper=a4, fontsize=11pt, titlepage]{scrartcl}
 \usepackage[T1]{fontenc}
 \usepackage{fourier}
-
-% English language/hyphenation
 \usepackage[english]{babel}	
 \usepackage[protrusion=true,expansion=true]{microtype}	
 \usepackage[latin1]{inputenc}
@@ -15,40 +12,33 @@
 \usepackage{amssymb}
 \usepackage{listings}
 \usepackage[pdftex]{graphicx}
+\usepackage{glossary}
 \usepackage[hyphens]{url}
-
-\bibliography{citations.bib}
-
+\bibliographystyle{alpha}
 
 %%% Custom sectioning
 \usepackage{sectsty}
 \allsectionsfont{\centering \normalfont\scshape}
 
-%%% Custom headers/footers (fancyhdr package)
-\usepackage{fancyhdr}
-\pagestyle{fancyplain}
-\fancyhead{}								% No page header
-\fancyfoot[L]{}								% Empty 
-\fancyfoot[C]{}								% Empty
-\fancyfoot[R]{\thepage}						% Pagenumbering
-\renewcommand{\headrulewidth}{0pt}			% Remove header underlines
-\renewcommand{\footrulewidth}{0pt}			% Remove footer underlines
 \setlength{\headheight}{13.6pt}
-
 
 %%% Equation and float numbering
 \numberwithin{equation}{section}		% Equationnumbering: section.eq#
 \numberwithin{figure}{section}			% Figurenumbering: section.fig#
 \numberwithin{table}{section}			% Tablenumbering: section.tab#
 
-
-%%% Maketitle metadata
-\newcommand{\HRule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule
+\newcommand{\HRule}[1]{
+	\rule{
+		\linewidth
+	}{#1}
+}
 
 \begin{document}
 
-\input{title.tex}
-\input{chapter_sonarqube.tex}
-\input{chapter_jira_agile.tex}
+	\input{title.tex}
+	\input{chapter_sonarqube.tex}
+	\input{chapter_jira_agile.tex}
+	
+	\bibliography{citations}
 
 \end{document}
